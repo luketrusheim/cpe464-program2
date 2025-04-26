@@ -221,7 +221,7 @@ int getHandles(uint8_t * pdu, char handles[9][MAX_HANDLE_SIZE + 1]) {
 
 void processMessage(uint8_t * pdu, int pduLen, int sendingSocket){
 	int receivingSocket = 0;
-	char receivingHandles[9][MAX_HANDLE_SIZE + 1] = {0};
+	char receivingHandles[9][MAX_HANDLE_SIZE + 1] = {{0}};
 	int numHandles = 0;
 
 	numHandles = getHandles(pdu, receivingHandles);

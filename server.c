@@ -168,6 +168,7 @@ void processBroadcast(uint8_t * pdu, int pduLen, int sendingSocket)
 }
 
 void processHandleListRequest(int socketNum) {
+	printf("num active handles: %d\n", getNumActiveHandles());
 	uint32_t numActiveHandles_n = htonl(getNumActiveHandles());
 	uint8_t pdu[FLAG_SIZE + 4] = {0};
 

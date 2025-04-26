@@ -245,7 +245,7 @@ void processStdin(int socketNum)
 	int commandLen = 0;
 
 	commandLen = readFromStdin(command);
-	printf("Read: %s | String len: %d (including null)\n", command, commandLen);
+	// printf("Read: %s | String len: %d (including null)\n", command, commandLen);
 
 	if (command[0] != '%')
 	{

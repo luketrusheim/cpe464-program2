@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include <arpa/inet.h>
 #include <stdio.h>
 #include <sys/socket.h>
 #include "safeUtil.h"

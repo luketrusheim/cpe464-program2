@@ -313,7 +313,7 @@ void sendMessageWithHeader(int socketNum, uint8_t * header, int headerLen, char 
 
 void processMulticastCommand(int socketNum, char *command) {
 	uint8_t pdu[1400] = {0};
-	char receivingHandles[9][MAX_HANDLE_SIZE + 1] = {0};
+	char receivingHandles[9][MAX_HANDLE_SIZE + 1] = {{0}};
 	int numHandles = 0;
 	char completeMessage[MAXBUF] = {0};
 

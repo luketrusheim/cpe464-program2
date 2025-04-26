@@ -285,7 +285,6 @@ void processBroadcastCommand(int socketNum, char * command) {
 	memcpy(completeMessage, command, 1400);
 
 	headerLen = createBroadcastHeader(header, myHandle);
-	printf("headerlen: %d\n", headerLen);
 	sendMessageWithHeader(socketNum, header, headerLen, completeMessage);
 }
 
@@ -312,18 +311,13 @@ void sendMessageWithHeader(int socketNum, uint8_t * header, int headerLen, char 
 }
 
 void processMulticastCommand(int socketNum, char *command) {
-	uint8_t pdu[1400] = {0};
+	uint8_t header[MAXBUF] = {0};
 	char receivingHandles[9][MAX_HANDLE_SIZE + 1] = {{0}};
 	int numHandles = 0;
 	char completeMessage[MAXBUF] = {0};
 
 	int returnStatus = 0;
 	returnStatus = parseMulticastCommand(command, receivingHandles, &numHandles, completeMessage);
-
-	// for (int i = 0; i < 9; i++) {
-	// 	printf("handle %d: %s\n", i, receivingHandles[i]);
-	// 	printf("num handles: %d\n", numHandles);
-	// }
 	
 	switch (returnStatus) {
 		case (MSG_PARSE_SUCCESS):
@@ -339,29 +333,13 @@ void processMulticastCommand(int socketNum, char *command) {
 			return;
 	}
 
-	char *messageChunk = completeMessage;
-
-	do {
-		char message[MAX_MSG_SIZE + 1] = {0};
-
-		int chunkSize = strlen(messageChunk);
-		if (chunkSize > MAX_MSG_SIZE) {
-			chunkSize = MAX_MSG_SIZE;
-		}
-
-		memcpy(message, messageChunk, chunkSize);
-		message[chunkSize] = '\0';
-
-		int pduLen = createMulticastPDU(pdu, myHandle, receivingHandles, numHandles, message);
-		sendPDU(socketNum, pdu, pduLen);
-
-		messageChunk += chunkSize;
-	} while (*messageChunk != '\0');
+	int headerLen = createMulticastHeader(header, myHandle, receivingHandles, numHandles);
+	sendMessageWithHeader(socketNum, header, headerLen, completeMessage);
 }
 
 void processMessageCommand(int socketNum, char *command)
 {
-	uint8_t pdu[1400] = {0};
+	uint8_t header[MAXBUF] = {0};
 	char receivingHandle[MAX_HANDLE_SIZE + 1] = {0};
 	char completeMessage[MAXBUF] = {0};
 
@@ -371,24 +349,8 @@ void processMessageCommand(int socketNum, char *command)
 		return;
 	}
 
-	char *messageChunk = completeMessage;
-
-	do {
-		char message[MAX_MSG_SIZE + 1] = {0};
-
-		int chunkSize = strlen(messageChunk);
-		if (chunkSize > MAX_MSG_SIZE) {
-			chunkSize = MAX_MSG_SIZE;
-		}
-
-		memcpy(message, messageChunk, chunkSize);
-		message[chunkSize] = '\0';
-
-		int pduLen = createMessagePDU(pdu, myHandle, receivingHandle, message);
-		sendPDU(socketNum, pdu, pduLen);
-
-		messageChunk += chunkSize;
-	} while (*messageChunk != '\0');
+	int headerLen = createMessageHeader(header, myHandle, receivingHandle);
+	sendMessageWithHeader(socketNum, header, headerLen, completeMessage);
 }
 
 int readFromStdin(char *buffer)

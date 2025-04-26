@@ -9,10 +9,10 @@
 #define MSG_PARSE_FAILURE -1
 #define MSG_PARSE_SUCCESS 0
 
-int createBroadcastHeader(uint8_t * header, char *sendingHandle);
+int createBroadcastHeader(uint8_t *header, char *sendingHandle);
 
-int createMulticastPDU(uint8_t * pdu, char *sendingHandle, char receivingHandles[][MAX_HANDLE_SIZE + 1], int numHandles, char *message);
+int createMulticastHeader(uint8_t *header, char *sendingHandle, char receivingHandles[][MAX_HANDLE_SIZE + 1], int numHandles);
 int parseMulticastCommand(char *command, char receivingHandles[][MAX_HANDLE_SIZE + 1], int *numHandles, char *message);
 
 int parseMessageCommand(char *command, char *receivingHandle, char *message);
-int createMessagePDU(uint8_t * pdu, char * sendingHandle, char *receivingHandle, char *message);
+int createMessageHeader(uint8_t *pdu, char *sendingHandle, char *receivingHandle);

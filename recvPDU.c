@@ -14,7 +14,6 @@ int recvPDU(int socketNumber, uint8_t * dataBuffer, int bufferSize) {
 
     bytesReceived = safeRecv(socketNumber, (uint8_t *) &lengthOfPDU_n, sizeof(uint16_t), MSG_WAITALL);
     if (bytesReceived == 0) {
-        printf("recvPDU: connection closed\n");
         return 0; // connection closed
     }
 

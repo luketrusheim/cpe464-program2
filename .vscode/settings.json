@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    "unistd.h": "c",
+    "safeutil.h": "c",
+    "polllib.h": "c",
+    "handletable.h": "c",
+    "handleconstants.h": "c",
+    "stdbool.h": "c",
+    "handleutil.h": "c",
+    "recvpdu.h": "c",
+    "commandhelpers.h": "c"
+  }
+}
